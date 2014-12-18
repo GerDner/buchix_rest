@@ -46,6 +46,7 @@ router.get('/', function(req, res) {
 
 person.collection.drop()
 week.collection.drop()
+type.collection.drop()
 // on routes that end in /persons
 // ----------------------------------------------------
 router.route('/people')
@@ -192,7 +193,7 @@ router.route('/weeks/:person_id')
     week.findById(req.params.person_id, function(err, week) {
         if (err)
             res.send(err);
-        res.json(week);
+        res.json({week:week});
     });
 })
 
@@ -254,7 +255,6 @@ router.route('/types')
 
     var newtype = new type(); // create a new instance of the type model
 	newtype.value = req.body.value; // set the types name (comes from the request)
-
 	newtype.save(function(err) {
         if (err)
             res.send(err);
@@ -286,7 +286,7 @@ router.route('/types/:person_id')
     type.findById(req.params.person_id, function(err, type) {
         if (err)
             res.send(err);
-        res.json(type);
+        res.json({type:type});
     });
 })
 
@@ -297,7 +297,8 @@ router.route('/types/:person_id')
         if (err)
             res.send(err);
 
-        type.value = req.body.value;
+        type.value = req.body.type.value;
+        type.person = req.body.type.person;
         type.save(function(err) {
             if (err)
                 res.send(err);
