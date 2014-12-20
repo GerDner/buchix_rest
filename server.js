@@ -44,9 +44,9 @@ router.get('/', function(req, res) {
     });
 });
 
-person.collection.drop()
-week.collection.drop()
-type.collection.drop()
+//person.collection.drop()
+//week.collection.drop()
+//type.collection.drop()
 // on routes that end in /persons
 // ----------------------------------------------------
 router.route('/people')
@@ -92,7 +92,7 @@ router.route('/people/:person_id')
     person.findById(req.params.person_id, function(err, person) {
         if (err)
             res.send(err);
-        res.json(person);
+        res.json({person:person});
     });
 })
 
